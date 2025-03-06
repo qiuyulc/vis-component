@@ -1,8 +1,8 @@
-import React from 'react';
+
 import Search from '@/components/Search';
 import type {Fields} from '@/components/Search';
 import {Form} from 'antd';
-export const HeaderForm = (props) => {
+const HeaderForm = (props) => {
   const [form] = Form.useForm();
   const fields: Fields[] = [
     {
@@ -31,3 +31,5 @@ export const HeaderForm = (props) => {
   ];
   return <Search col={4} formProps={{ form }} fields={[...fields]} />;
 };
+
+export default HeaderForm
