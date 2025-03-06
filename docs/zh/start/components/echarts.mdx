@@ -1,0 +1,100 @@
+import Echarts from "@/components/Echarts";
+
+# Echarts
+
+## 简介
+
+对 Echarts 进行封装，支持图表的自适应。
+
+## 安装
+
+首先，你需要安装 `echarts`。
+
+```bash
+npm install echarts
+```
+
+## 示例
+
+<Echarts
+  style={{height:'400px'}}
+  echarts_option={{
+    xAxis: {
+      type: "category",
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: [120, 200, 150, 80, 70, 110, 130],
+        type: "bar",
+      },
+    ],
+  }}
+  events={[
+    {
+      type: "click",
+      events: (params) => {
+        console.log(params);
+      },
+    },
+  ]}
+/>
+
+```js
+import React, { useRef } from "react";
+import { Echarts } from "vis-component";
+import type { EChartsOption, EChartsEvent, EchartsRef } from "vis-component";
+
+export default function App() {
+  const ref = useRef<EchartsRef|null> (null);
+  const options: echarts.EChartsOption = {
+    xAxis: {
+      type: "category",
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: [120, 200, 150, 80, 70, 110, 130],
+        type: "bar",
+      },
+    ],
+  };
+
+  const echarts_click = (params: EChartsEvent) => {
+    console.log(params);
+  };
+
+  return (
+    <Echarts
+      echarts_option={options}
+      events={[{ type: "click", events: echarts_click }]}
+    />
+  );
+}
+```
+
+
+## API
+
+### EchartsContainerType
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| echarts_option | Echarts 配置项 | `EChartsOption` | - |
+| events | Echarts 事件 | `EChartsEvent[]` | - |
+| ref | Echarts 对象 | `EchartsRef` | - |
+| style | 容器样式属性 | `React.CSSProperties` | - |
+
+
+#### EChartsEvent
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| type | Echarts 事件 | `ECElementEvent['type']` | - |
+| events | 回调 函数 | `(params: EChartsEvent) => void` | - |

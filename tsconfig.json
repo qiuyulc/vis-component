@@ -9,13 +9,31 @@
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "removeComments": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"] // 设置 @ 别名指向 src 目录
+    }
+    // "target": "ES2020",
+    // "lib": ["DOM", "ES2020"],
+    // "module": "ESNext",
+    // "jsx": "react-jsx",
+    // "noEmit": true,
+    // "strict": true,
+    // "skipLibCheck": true,
+    // "isolatedModules": true,
+    // "resolveJsonModule": true,
+    // "moduleResolution": "bundler",
+    // "useDefineForClassFields": true,
+    // "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/App.tsx"]
+  "include": ["src/**/*","docs/**/*.tsx"],
+  "exclude": ["node_modules", "src/App.tsx"],
+  "mdx": {
+    "checkMdx": true
+  }
 }

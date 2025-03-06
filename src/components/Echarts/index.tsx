@@ -19,24 +19,26 @@ import { ECElementEvent } from 'echarts/types/dist/echarts';
 import { useSize } from 'ahooks';
 
 export type EChartsOption = echarts.EChartsOption;
-
+export type EChartsEvent = ECElementEvent;
+export type EchartsRef = echarts.ECharts;
 export interface EchartsEvents {
-  type: string;
-  events: (params: ECElementEvent) => void;
+  type: ECElementEvent['type'];
+  events: (params: EChartsEvent) => void;
 }
 
 export interface EchartsContainerType {
   echarts_option: EChartsOption;
   events?: EchartsEvents[];
+  style: React.CSSProperties;
 }
 
 const EchartsContainer = forwardRef((props: EchartsContainerType, ref) => {
-  const { echarts_option, events } = props;
+  const { echarts_option, events,style } = props;
 
   const echarts_ref = useRef<HTMLDivElement>(null);
   const echarts_box_ref = useRef<HTMLDivElement>(null);
   const size = useSize(echarts_box_ref);
-  const myChart = useRef<echarts.ECharts | null>(null);
+  const myChart = useRef<EchartsRef | null>(null);
   //
   const init = () => {
     if (echarts_ref.current) {
@@ -50,7 +52,7 @@ const EchartsContainer = forwardRef((props: EchartsContainerType, ref) => {
         for (let i = 0; i < events.length; i++) {
           if (myChart.current) {
             myChart.current.on(events[i].type, function (params) {
-              return events[i].events && events[i].events(params as ECElementEvent);
+              return events[i].events && events[i].events(params as EChartsEvent);
             });
           }
         }
@@ -85,7 +87,7 @@ const EchartsContainer = forwardRef((props: EchartsContainerType, ref) => {
   }, []);
   return (
     <div
-      style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex' }}
+      style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex',...style }}
       ref={echarts_box_ref}
     >
       <div style={{ flexGrow: 1, height: '100%' }} ref={echarts_ref} />

@@ -1,0 +1,13 @@
+.git
+.gitignore
+node_modules
+.env
+.vscode
+test
+template-*
+.temp-*
+*.log
+
+docs/*
+doc_build/*
+public/*

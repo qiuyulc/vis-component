@@ -1,0 +1,82 @@
+import { PackageManagerTabs } from '@theme';
+import {HeaderForm} from '@components/search';
+
+# Search
+
+## 简介
+
+对 antd Form组件进行二次封装，结合栅格布局，简化表单创建。
+
+## 安装
+
+首先，你需要安装 `antd 5.x` 版本
+
+<PackageManagerTabs command="install antd -D" />
+
+## 示例
+
+### 基础用法
+
+
+<HeaderForm/>
+
+``` js
+import {Search} from 'vis-component';
+import type {Fields} from 'vis-component';
+
+const HeaderForm = (props) => {
+  const [form] = Form.useForm();
+  const fields: Fields[] = [
+    {
+      label: '姓名',
+      widget: 'input',
+      colSpan: 1,
+      widgetItemProps: {
+        name: 'name',
+      },
+      widgetProps: {
+        placeholder: '请输入姓名',
+      },
+    },
+    {
+      label: '搜索',
+      widget: 'button',
+      colSpan: 1,
+      widgetProps: {
+        type: 'primary',
+        onClick: () => {
+          const value = form.getFieldsValue();
+          console.log(value);
+        },
+      },
+    },
+  ];
+  return <Search col={4} formProps={{ form }} fields={[...fields]} />;
+};
+```
+
+
+## API
+
+### SearchProps
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| col | 列 | `number` | 4 |
+| fields | 参数数组 | `Fields[]` | - |
+| formProps | form 参数 | `FormProps` | - |
+
+
+### fields
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| label | 名称 | `ReactNode` | - |
+| widget | 类型 | `select、input、button、textarea、input_number、password、other` | - |
+| colSpan | 占据空间 | `number` | 1 |
+| widgetProps | 组件自身props |  | - |
+| widgetItemProps | FormItem 表单props |  | - |
+| widgetRender | 自定义 | `() => ReactNode` | - |
+
+
+
