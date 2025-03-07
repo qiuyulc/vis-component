@@ -1,5 +1,5 @@
 import { defineConfig } from 'rspress/config';
-
+import path from 'path';
 export default defineConfig({
   // 文档根目录
   root: 'docs',
@@ -7,6 +7,9 @@ export default defineConfig({
   route:{
     exclude:['docs/components/*.tsx'],
   },
+  globalStyles: path.join(__dirname, 'docs/index.css'),
+  logo: '/user.jpg',
+  logoText:'vis-component',
   builderConfig: {
     resolve: {
       alias: {
@@ -16,6 +19,14 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    socialLinks: [
+        {
+          icon: 'github',
+          mode: 'link',
+          content:'https://github.com/qiuyulc/vis-component'
+        },
+      ],
+    darkMode: false,
     outlineTitle: '目录',
     prevPageText: '上一页',
     nextPageText: '下一页',

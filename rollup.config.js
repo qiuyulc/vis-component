@@ -11,7 +11,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import babel from "@rollup/plugin-babel";
 
-import postcss from 'rollup-plugin-postcss';
+import postcss from "rollup-plugin-postcss";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // 读取本地模板文件
@@ -50,12 +50,12 @@ const plugin = [
   resolve(),
   commonjs(),
   postcss({
-    extensions: ['.less'], // 指定处理的文件扩展名
+    extensions: [".less"], // 指定处理的文件扩展名
     // inject: false, // 不将样式注入到 JavaScript 中，而是在单独的 CSS 文件中输出
     minimize: true, // 压缩 CSS
-    extract:true,
+    extract: true,
   }),
-  typescript(),
+  typescript({ tsconfig: "./tsconfig.build.json" }),
   babel({
     presets: ["@babel/preset-env"],
     exclude: "**/node_modules/**", // 排除 node_modules 中的文件
@@ -97,22 +97,22 @@ const output = {
   preserveModulesRoot: "src",
 };
 
-
-export default [{
-  input: isProduction ? ["./src/index.ts", ...inputs] : "./src/App.tsx",
-  output: isProduction
-    ? output
-    : {
-        file: "./dist/bundle.js",
-        format: "esm",
-        sourcemap: !isProduction,
-        name: `${widgetPathName}`,
-        // globals: {
-        //   react: "React",
-        //   "react-dom": "ReactDOM",
-        // },
-      },
-  external: isProduction ? ["react", "react-dom","antd",'echarts'] : [],
-  plugins: plugin,
-}
+export default [
+  {
+    input: isProduction ? ["./src/index.ts", ...inputs] : "./src/App.tsx",
+    output: isProduction
+      ? output
+      : {
+          file: "./dist/bundle.js",
+          format: "esm",
+          sourcemap: !isProduction,
+          name: `${widgetPathName}`,
+          // globals: {
+          //   react: "React",
+          //   "react-dom": "ReactDOM",
+          // },
+        },
+    external: isProduction ? ["react", "react-dom", "antd", "echarts"] : [],
+    plugins: plugin,
+  },
 ];

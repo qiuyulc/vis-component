@@ -29,7 +29,7 @@ export interface EchartsEvents {
 export interface EchartsContainerType {
   echarts_option: EChartsOption;
   events?: EchartsEvents[];
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }
 
 const EchartsContainer = forwardRef((props: EchartsContainerType, ref) => {
@@ -90,7 +90,7 @@ const EchartsContainer = forwardRef((props: EchartsContainerType, ref) => {
       style={{ width: '100%', height: '100%', overflow: 'hidden', display: 'flex',...style }}
       ref={echarts_box_ref}
     >
-      <div style={{ flexGrow: 1, height: '100%' }} ref={echarts_ref} />
+      <div style={{ flexGrow: 1, height: '100%',width:'100%' }} ref={echarts_ref} />
     </div>
   );
 });

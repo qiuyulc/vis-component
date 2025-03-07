@@ -1,7 +1,9 @@
 
 import Search from '@/components/Search';
-import type {Fields} from '@/components/Search';
+import type { Fields } from '@/components/Search';
 import {Form} from 'antd';
+
+
 const HeaderForm = (props) => {
   const [form] = Form.useForm();
   const fields: Fields[] = [

@@ -1,15 +1,23 @@
 {
   "name": "vis-component",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/es/index.js",
-  "types": "dist/es/index.d.ts",
   "data": {
     "widgetName": "vis-component"
   },
+  "version": "1.0.1",
+  "description": "一个封装了antd和echarts的react组件库",
+  "main": "dist/es/index.js",
+  "types": "dist/es/index.d.ts",
+  "type": "module",
+  "keywords": ["react","echarts","antd","表单","可视化"],
+  "author": "qiuyu <718647063@qq.com>",
+  "license": "MIT",
   "files": [
     "dist/**/*"
   ],
+  "bugs":{
+    "url":"https://github.com/qiuyulc/vis-component/issues"
+  },
+  "homepage": "https://qiuyulc.github.io/vis-component/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "rollup -c --environment NODE_ENV:development -w",
@@ -18,15 +26,10 @@
     "docs:build": "rspress build",
     "docs:preview": "rspress preview"
   },
-  "type": "module",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "peerDependencies": {
     "antd": ">5.0.0",
-    "echarts": "^5.0.0",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 ||^19.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -42,7 +45,8 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "echarts": "^5.0.0",
+    "antd": "^5.24.3",
+    "echarts": "^5.6.0",
     "less": "^4.2.2",
     "postcss": "^8.5.3",
     "rollup": "^4.34.8",

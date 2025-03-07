@@ -32,7 +32,7 @@
     // "allowImportingTsExtensions": true
   },
   "include": ["src/**/*","docs/**/*.tsx"],
-  "exclude": ["node_modules", "src/App.tsx"],
+  "exclude": ["node_modules", "src/App.tsx","dist"],
   "mdx": {
     "checkMdx": true
   }
