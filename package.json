@@ -8,14 +8,20 @@
   "main": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
   "type": "module",
-  "keywords": ["react","echarts","antd","表单","可视化"],
+  "keywords": [
+    "react",
+    "echarts",
+    "antd",
+    "表单",
+    "可视化"
+  ],
   "author": "qiuyu <718647063@qq.com>",
   "license": "MIT",
   "files": [
     "dist/**/*"
   ],
-  "bugs":{
-    "url":"https://github.com/qiuyulc/vis-component/issues"
+  "bugs": {
+    "url": "https://github.com/qiuyulc/vis-component/issues"
   },
   "homepage": "https://qiuyulc.github.io/vis-component/",
   "scripts": {
@@ -27,7 +33,7 @@
     "docs:preview": "rspress preview"
   },
   "peerDependencies": {
-    "antd": ">5.0.0",
+    "antd": ">=5.0.0",
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^17.0.0 || ^18.0.0 ||^19.0.0"
   },
@@ -37,6 +43,7 @@
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.27.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-html": "^2.0.0",
@@ -46,16 +53,21 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "antd": "^5.24.3",
+    "babel-plugin-import": "^1.13.8",
     "echarts": "^5.6.0",
+    "esbuild": "^0.25.1",
     "less": "^4.2.2",
     "postcss": "^8.5.3",
     "rollup": "^4.34.8",
     "rollup-plugin-delete": "^3.0.0",
     "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.2.1",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^3.0.0",
     "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-visualizer": "^5.14.0",
+    "rollup-preserve-directives": "^1.1.3",
     "rspress": "^1.42.1",
     "tslib": "^2.8.1",
     "typescript": "^5.7.3"

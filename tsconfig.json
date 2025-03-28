@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
     //   "rootDir": ".",
-    "declaration": true, // 生成 .d.ts 文件
-    "declarationDir": "./dist/types",
+    // "declaration": true, // 生成 .d.ts 文件
+    // "declarationDir": "./dist/types",
     "noEmit": true,
-    "emitDeclarationOnly": false,
     "target": "esnext",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "sourceMap": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -18,21 +17,9 @@
     "paths": {
       "@/*": ["./src/*"] // 设置 @ 别名指向 src 目录
     }
-    // "target": "ES2020",
-    // "lib": ["DOM", "ES2020"],
-    // "module": "ESNext",
-    // "jsx": "react-jsx",
-    // "noEmit": true,
-    // "strict": true,
-    // "skipLibCheck": true,
-    // "isolatedModules": true,
-    // "resolveJsonModule": true,
-    // "moduleResolution": "bundler",
-    // "useDefineForClassFields": true,
-    // "allowImportingTsExtensions": true
   },
   "include": ["src/**/*","docs/**/*.tsx"],
-  "exclude": ["node_modules", "src/App.tsx","dist"],
+  "exclude": ["node_modules","stats.html"],
   "mdx": {
     "checkMdx": true
   }

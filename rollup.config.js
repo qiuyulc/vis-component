@@ -11,6 +11,9 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import babel from "@rollup/plugin-babel";
 
+import { visualizer } from "rollup-plugin-visualizer";
+import esbuild from "rollup-plugin-esbuild";
+
 import postcss from "rollup-plugin-postcss";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,41 +50,95 @@ const plugin = [
   del({
     targets: ["dist/*"], // 清理 dist 目录下的所有文件
   }),
-  resolve(),
-  commonjs(),
+  replace({
+    preventAssignment: true,
+    "use client": "",
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+  }),
+  resolve({
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    preferBuiltins: true,
+  }),
+  commonjs({
+    transformMixedEsModules: true,
+    requireReturnsDefault: "auto",
+  }),
+  // typescript({
+  //   tsconfig: isProduction ? "./tsconfig.build.json" : "./tsconfig.json",
+  // }),
   postcss({
     extensions: [".less"], // 指定处理的文件扩展名
     // inject: false, // 不将样式注入到 JavaScript 中，而是在单独的 CSS 文件中输出
     minimize: true, // 压缩 CSS
     extract: true,
   }),
-  typescript({ tsconfig: "./tsconfig.build.json" }),
-  babel({
-    presets: ["@babel/preset-env"],
-    exclude: "**/node_modules/**", // 排除 node_modules 中的文件
-    babelHelpers: "bundled",
-  }),
-  replace({
-    preventAssignment: true,
-    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-  }),
+
+  // babel({
+  //   babelHelpers: "runtime",
+  //   // 如果您在 babel.config.js 中已经设置了 exclude，这里可以不再设置
+  //   // 或者保持一致的配置
+  //   exclude: "**/node_modules/**",
+  //   extensions: [".js", ".jsx", ".ts", ".tsx"],
+  // }),
 ];
+
+if (isProduction) {
+  plugin.push(
+    typescript({
+      // tsconfig: isProduction ? "./tsconfig.build.json" : "./tsconfig.json",
+      tsconfig: "./tsconfig.build.json",
+    }),
+    babel({
+      babelHelpers: "runtime",
+      // 如果您在 babel.config.js 中已经设置了 exclude，这里可以不再设置
+      // 或者保持一致的配置
+      exclude: "**/node_modules/**",
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
+    })
+  );
+}
 
 if (!isProduction) {
   plugin.push(
     ...[
+      // visualizer({
+      //   open: true, // 在浏览器中自动打开报告
+      //   gzipSize: true, // 显示gzip压缩后的尺寸
+      //   brotliSize: true, // 显示brotli压缩后的尺寸
+      // }),
+      esbuild({
+        include: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        sourceMap: true,
+        minify: process.env.NODE_ENV === "production",
+        target: "es2017",
+        jsx: "transform",
+        jsxFactory: "React.createElement",
+        jsxFragment: "React.Fragment",
+        // 添加这些选项
+        treeShaking: true,
+        legalComments: "none",
+        logLevel: "error", // 减少日志输出
+        loaders: {
+          // 明确指定各种文件的加载器
+          ".js": "jsx",
+          ".jsx": "jsx",
+          ".ts": "tsx",
+          ".tsx": "tsx",
+        },
+      }),
       html({
-        title: "本地运行",
-        fileName: "index.html", // 生成的 HTML 文件名
+        title: "vis-component",
+        fileName: "index.html",
+        publicPath: "./",
         template: ({ attributes, files, meta, publicPath, title }) => {
           return template;
         },
-        publicPath: "./", // 设置公共路径
       }),
       serve({
         open: true, // 自动打开浏览器
         contentBase: "dist", //
-        port: 3000, // 端口号
+        port: 3001, // 端口号
       }),
       livereload({
         watch: "dist", // 监听 public 目录
@@ -97,20 +154,33 @@ const output = {
   preserveModulesRoot: "src",
 };
 
+const CDN = {};
 export default [
   {
+    context: "window",
+    // perf: true,
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      tryCatchDeoptimization: false,
+    },
+    watch: {
+      clearScreen: false,
+      exclude: ["node_modules/**"],
+      chokidar: {
+        usePolling: false,
+        ignoreInitial: true,
+      },
+    },
     input: isProduction ? ["./src/index.ts", ...inputs] : "./src/App.tsx",
     output: isProduction
       ? output
       : {
           file: "./dist/bundle.js",
           format: "esm",
-          sourcemap: !isProduction,
+          extend: true,
+          sourcemap: true,
           name: `${widgetPathName}`,
-          // globals: {
-          //   react: "React",
-          //   "react-dom": "ReactDOM",
-          // },
         },
     external: isProduction ? ["react", "react-dom", "antd", "echarts"] : [],
     plugins: plugin,
